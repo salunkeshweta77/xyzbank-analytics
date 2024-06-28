@@ -1,0 +1,9 @@
+{
+	"name": "XYZBanking",
+	"location": "northeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ba79a1c3-2c68-4ce7-9ceb-150ec77e3369",
+		"tenantId": "10fe21ea-d428-4170-9227-8fcb85e0161a"
+	}
+}
