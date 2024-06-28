@@ -1,0 +1,16 @@
+{
+	"name": "SqlTableCustomerLoan",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_LoanDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "CustomerLoanInfo"
+		}
+	}
+}
