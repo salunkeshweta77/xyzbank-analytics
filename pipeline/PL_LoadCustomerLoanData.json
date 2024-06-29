@@ -59,8 +59,8 @@
 				]
 			},
 			{
-				"name": "Data flow1",
-				"type": "ExecuteDataFlow",
+				"name": "Stored procedure1",
+				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
 						"activity": "Copy data1",
@@ -78,15 +78,11 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "DF_DataTransform",
-						"type": "DataFlowReference"
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "Fine"
+					"storedProcedureName": "[dbo].[CustomerLoan_TransformData]"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_LoanDatabase",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
