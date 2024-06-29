@@ -7,7 +7,38 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "customer_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "customer_age",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "customer_income",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "home_ownership",
+				"type": "nvarchar"
+			},
+			{
+				"name": "employment_duration",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "cred_hist_length",
+				"type": "int",
+				"precision": 10
+			}
+		],
 		"typeProperties": {
 			"schema": "dbo",
 			"table": "CustomerDetails"
