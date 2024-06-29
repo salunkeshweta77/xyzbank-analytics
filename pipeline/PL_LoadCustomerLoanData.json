@@ -20,7 +20,10 @@
 						"additionalColumns": [
 							{
 								"name": "load_date",
-								"value": "$$COLUMN:utcnow()"
+								"value": {
+									"value": "utcnow()",
+									"type": "Expression"
+								}
 							}
 						],
 						"storeSettings": {
