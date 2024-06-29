@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "CSV to SQLTable",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -59,11 +59,11 @@
 				]
 			},
 			{
-				"name": "Stored procedure1",
+				"name": "Execute DataTransform SP",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Copy data1",
+						"activity": "CSV to SQLTable",
 						"dependencyConditions": [
 							"Succeeded"
 						]
