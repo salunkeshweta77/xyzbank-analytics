@@ -1,0 +1,40 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          customer_id as integer,",
+				"          customer_age as integer,",
+				"          customer_income as decimal(18,2),",
+				"          home_ownership as string,",
+				"          employment_duration as integer,",
+				"          loan_intent as string,",
+				"          loan_grade as string,",
+				"          loan_amnt as decimal(19,4),",
+				"          loan_int_rate as decimal(5,2),",
+				"          term_years as integer,",
+				"          historical_default as string,",
+				"          cred_hist_length as integer,",
+				"          current_loan_status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1"
+			]
+		}
+	}
+}
