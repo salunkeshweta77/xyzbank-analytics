@@ -29,7 +29,7 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"preCopyScript": {
-							"value": "@concat('Truncate Table',pipeline().parameters.SchemaName,'.',pipeline().parameters.TableName)",
+							"value": "@concat('Truncate Table ',pipeline().parameters.SchemaName,'.',pipeline().parameters.TableName)",
 							"type": "Expression"
 						},
 						"writeBehavior": "insert",
