@@ -55,7 +55,7 @@
 								"type": "Expression"
 							},
 							"FileName": {
-								"value": "@pipeline().parameters.FileName",
+								"value": "@concat(pipeline().parameters.FileName,'.csv')",
 								"type": "Expression"
 							}
 						}
@@ -104,6 +104,87 @@
 					"referenceName": "LS_LoanDatabase",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Execute DataTransform SP",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DelimitedTextCSV",
+						"type": "DatasetReference",
+						"parameters": {
+							"DirectoryName": {
+								"value": "@pipeline().parameters.DirectoryName",
+								"type": "Expression"
+							},
+							"FileName": {
+								"value": "@concat(pipeline().parameters.FileName,'.csv')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DelimitedTextCSVArchive",
+						"type": "DatasetReference",
+						"parameters": {
+							"ArchiveFileName": {
+								"value": "@{concat(pipeline().parameters.FileName,'_',convertTimeZone(utcnow(),'UTC','W. Europe Standard Time','yyyyMMddHHmmssfff'),'.csv')}",
+								"type": "Expression"
+							}
+						}
+					}
+				]
 			}
 		],
 		"parameters": {
@@ -121,7 +202,11 @@
 			},
 			"FileName": {
 				"type": "string",
-				"defaultValue": "LoanDataset.csv"
+				"defaultValue": "LoanDataset"
+			},
+			"ArchiveFolderName": {
+				"type": "string",
+				"defaultValue": "Archive"
 			}
 		},
 		"annotations": []
