@@ -106,7 +106,7 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "Move File To Archive",
 				"type": "Copy",
 				"dependsOn": [
 					{
