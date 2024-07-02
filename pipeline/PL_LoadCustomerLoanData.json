@@ -29,7 +29,7 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"preCopyScript": {
-							"value": "@concat('Truncate Table ',pipeline().parameters.SchemaName,'.',pipeline().parameters.BaseTableName)",
+							"value": "@concat('Truncate Table ',pipeline().parameters.SchemaName,'.',pipeline().parameters.SourceTableName)",
 							"type": "Expression"
 						},
 						"writeBehavior": "insert",
@@ -48,7 +48,17 @@
 				"inputs": [
 					{
 						"referenceName": "DelimitedTextCSV",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"DirectoryName": {
+								"value": "@pipeline().parameters.DirectoryName",
+								"type": "Expression"
+							},
+							"FileName": {
+								"value": "@pipeline().parameters.FileName",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
@@ -104,6 +114,14 @@
 			"SchemaName": {
 				"type": "string",
 				"defaultValue": "dbo"
+			},
+			"DirectoryName": {
+				"type": "string",
+				"defaultValue": "DailyLoad"
+			},
+			"FileName": {
+				"type": "string",
+				"defaultValue": "LoanDataset.csv"
 			}
 		},
 		"annotations": []
