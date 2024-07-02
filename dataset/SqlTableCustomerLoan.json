@@ -5,12 +5,26 @@
 			"referenceName": "LS_LoanDatabase",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"SourceTableName": {
+				"type": "string"
+			},
+			"SourceSchemaName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "dbo",
-			"table": "CustomerLoanInfo"
+			"schema": {
+				"value": "@dataset().SourceSchemaName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().SourceTableName",
+				"type": "Expression"
+			}
 		}
 	}
 }
