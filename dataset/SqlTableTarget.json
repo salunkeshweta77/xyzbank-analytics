@@ -10,8 +10,7 @@
 				"type": "string"
 			},
 			"Schema": {
-				"type": "string",
-				"defaultValue": "dbo"
+				"type": "string"
 			}
 		},
 		"annotations": [],
