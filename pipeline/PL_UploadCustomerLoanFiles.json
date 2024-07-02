@@ -18,7 +18,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "SELECT \nTABLE_SCHEMA AS Table_Schema, \nTABLE_NAME AS Table_Name \nFROM INFORMATION_SCHEMA.TABLES \nWHERE TABLE_SCHEMA = 'dbo'",
+							"value": "SELECT \nTABLE_SCHEMA AS Table_Schema, \nTABLE_NAME AS Table_Name \nFROM INFORMATION_SCHEMA.TABLES \nWHERE TABLE_SCHEMA = 'dbo'\nand TABLE_NAME <> 'CustomerLoanInfo'",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -103,7 +103,7 @@
 									"referenceName": "DelimitedTextCSV",
 									"type": "DatasetReference",
 									"parameters": {
-										"DirectoryName": "DailyFetch",
+										"DirectoryName": "DailyFetch/CustomerLoan",
 										"FileName": {
 											"value": "@concat(item().Table_Name,'.csv')",
 											"type": "Expression"
