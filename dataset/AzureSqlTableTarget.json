@@ -1,9 +1,18 @@
 {
-	"name": "AzureSqlTable1",
+	"name": "AzureSqlTableTarget",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TargetTableNames": {
+				"type": "string"
+			},
+			"Schema": {
+				"type": "string",
+				"defaultValue": "dbo"
+			}
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
@@ -73,8 +82,14 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "dbo",
-			"table": "CustomerLoanInfo"
+			"schema": {
+				"value": "@dataset().Schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().TargetTableNames",
+				"type": "Expression"
+			}
 		}
 	}
 }
