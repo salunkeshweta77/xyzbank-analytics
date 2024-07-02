@@ -5,14 +5,6 @@
 			"referenceName": "AzureSqlDatabase1",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"TargetTableNames": {
-				"type": "string"
-			},
-			"Schema": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
@@ -79,16 +71,6 @@
 				"name": "current_loan_status",
 				"type": "nvarchar"
 			}
-		],
-		"typeProperties": {
-			"schema": {
-				"value": "@dataset().Schema",
-				"type": "Expression"
-			},
-			"table": {
-				"value": "@dataset().TargetTableNames",
-				"type": "Expression"
-			}
-		}
+		]
 	}
 }
