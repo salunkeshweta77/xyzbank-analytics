@@ -1,0 +1,91 @@
+{
+	"name": "DelimitedTextCSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"DirectoryName": {
+				"type": "string"
+			},
+			"FileName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().FileName",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().DirectoryName",
+					"type": "Expression"
+				},
+				"fileSystem": "xyzfilesystem"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "customer_id",
+				"type": "String"
+			},
+			{
+				"name": "customer_age",
+				"type": "String"
+			},
+			{
+				"name": "customer_income",
+				"type": "String"
+			},
+			{
+				"name": "home_ownership",
+				"type": "String"
+			},
+			{
+				"name": "employment_duration",
+				"type": "String"
+			},
+			{
+				"name": "loan_intent",
+				"type": "String"
+			},
+			{
+				"name": "loan_grade",
+				"type": "String"
+			},
+			{
+				"name": "loan_amnt",
+				"type": "String"
+			},
+			{
+				"name": "loan_int_rate",
+				"type": "String"
+			},
+			{
+				"name": "term_years",
+				"type": "String"
+			},
+			{
+				"name": "historical_default",
+				"type": "String"
+			},
+			{
+				"name": "cred_hist_length",
+				"type": "String"
+			},
+			{
+				"name": "Current_loan_status",
+				"type": "String"
+			}
+		]
+	}
+}

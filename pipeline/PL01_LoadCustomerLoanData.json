@@ -1,0 +1,214 @@
+{
+	"name": "PL01_LoadCustomerLoanData",
+	"properties": {
+		"activities": [
+			{
+				"name": "CSV to SQLTable",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": {
+							"value": "@concat('Truncate Table ',pipeline().parameters.SchemaName,'.',pipeline().parameters.SourceTableName)",
+							"type": "Expression"
+						},
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DelimitedTextCSV",
+						"type": "DatasetReference",
+						"parameters": {
+							"DirectoryName": {
+								"value": "@pipeline().parameters.DirectoryName",
+								"type": "Expression"
+							},
+							"FileName": {
+								"value": "@concat(pipeline().parameters.FileName,'.csv')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SqlTableCustomerLoan",
+						"type": "DatasetReference",
+						"parameters": {
+							"SourceTableName": {
+								"value": "@pipeline().parameters.SourceTableName",
+								"type": "Expression"
+							},
+							"SourceSchemaName": {
+								"value": "@pipeline().parameters.SchemaName",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Execute DataTransform SP",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "CSV to SQLTable",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[CustomerLoan_TransformData]"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_LoanDatabase",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Move File To Archive",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Execute DataTransform SP",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DelimitedTextCSV",
+						"type": "DatasetReference",
+						"parameters": {
+							"DirectoryName": {
+								"value": "@pipeline().parameters.DirectoryName",
+								"type": "Expression"
+							},
+							"FileName": {
+								"value": "@concat(pipeline().parameters.FileName,'.csv')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DelimitedTextCSVArchive",
+						"type": "DatasetReference",
+						"parameters": {
+							"ArchiveFileName": {
+								"value": "@{concat(pipeline().parameters.FileName,'_',convertTimeZone(utcnow(),'UTC','W. Europe Standard Time','yyyyMMddHHmmssfff'),'.csv')}",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"SourceTableName": {
+				"type": "string",
+				"defaultValue": "CustomerLoanInfo"
+			},
+			"SchemaName": {
+				"type": "string",
+				"defaultValue": "dbo"
+			},
+			"DirectoryName": {
+				"type": "string",
+				"defaultValue": "DailyLoad"
+			},
+			"FileName": {
+				"type": "string",
+				"defaultValue": "LoanDataset"
+			},
+			"ArchiveFolderName": {
+				"type": "string",
+				"defaultValue": "Archive"
+			}
+		},
+		"annotations": []
+	}
+}

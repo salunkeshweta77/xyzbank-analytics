@@ -1,0 +1,47 @@
+{
+	"name": "PL03_ExecutePL01_PL02",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute PL01",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL01_LoadCustomerLoanData",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Execute PL02",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Execute PL01",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL02_UploadCustomerLoanFiles",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": []
+	}
+}
