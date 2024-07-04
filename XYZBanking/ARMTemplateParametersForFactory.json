@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "XYZBanking"
+		},
+		"LS_LoanDatabase_password": {
+			"value": ""
+		},
+		"LS_ADLS_XYZBank_accountKey": {
+			"value": ""
+		},
+		"LS_LoanDatabase_properties_typeProperties_server": {
+			"value": "serverbanking.database.windows.net"
+		},
+		"LS_LoanDatabase_properties_typeProperties_database": {
+			"value": "LoanDatabase"
+		},
+		"LS_LoanDatabase_properties_typeProperties_userName": {
+			"value": "salunkeshweta77"
+		},
+		"LS_ADLS_XYZBank_properties_typeProperties_url": {
+			"value": "https://saxyzbank.dfs.core.windows.net/"
+		}
+	}
+}
