@@ -47,7 +47,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DelimitedTextCSV",
+						"referenceName": "DS_DelimitedTextCSV",
 						"type": "DatasetReference",
 						"parameters": {
 							"DirectoryName": {
@@ -63,7 +63,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SqlTableCustomerLoan",
+						"referenceName": "DS_SqlTableLoanDb",
 						"type": "DatasetReference",
 						"parameters": {
 							"SourceTableName": {
@@ -159,7 +159,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DelimitedTextCSV",
+						"referenceName": "DS_DelimitedTextCSV",
 						"type": "DatasetReference",
 						"parameters": {
 							"DirectoryName": {
@@ -175,7 +175,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DelimitedTextCSVArchive",
+						"referenceName": "DS_DelimitedTextCSVArchive",
 						"type": "DatasetReference",
 						"parameters": {
 							"ArchiveFileName": {
