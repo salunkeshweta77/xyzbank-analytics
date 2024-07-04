@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "PL_LoadCustomerLoanData",
+					"referenceName": "PL03_ExecutePL01_PL02",
 					"type": "PipelineReference"
 				}
 			}
@@ -17,6 +17,7 @@
 				"frequency": "Day",
 				"interval": 1,
 				"startTime": "2024-07-02T14:43:00",
+				"endTime": "2024-07-07T21:20:42",
 				"timeZone": "W. Europe Standard Time",
 				"schedule": {
 					"minutes": [
