@@ -112,7 +112,7 @@
 											"type": "Expression"
 										},
 										"SourceSchemaName": {
-											"value": "@item().SchemaName",
+											"value": "@item().Schema_Name",
 											"type": "Expression"
 										}
 									}
