@@ -18,21 +18,31 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "SELECT \nTABLE_SCHEMA AS Table_Schema, \nTABLE_NAME AS Table_Name \nFROM INFORMATION_SCHEMA.TABLES \nWHERE TABLE_SCHEMA = 'dbo'\nand TABLE_NAME <> 'CustomerLoanInfo'",
+							"value": "@concat(\n    'SELECT TABLE_SCHEMA AS Table_Schema, TABLE_NAME AS Table_Name \n    FROM ', \n    pipeline().parameters.SchemaName, \n    '.', \n    pipeline().parameters.TableName, \n    ' WHERE TABLE_SCHEMA = ''', \n    pipeline().parameters.InfoSchemaName, \n    ''' AND TABLE_NAME <> ''', \n    pipeline().parameters.NoTableName, \n    ''''\n)\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "SqlTableTarget",
-						"type": "DatasetReference"
+						"referenceName": "DS_SqlTableLoanDb",
+						"type": "DatasetReference",
+						"parameters": {
+							"SourceTableName": {
+								"value": "@pipeline().parameters.TableName",
+								"type": "Expression"
+							},
+							"SourceSchemaName": {
+								"value": "@pipeline().parameters.SchemaName",
+								"type": "Expression"
+							}
+						}
 					},
 					"firstRowOnly": false
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "Loop Through dbo Tables",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -50,7 +60,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy data1",
+							"name": "Convert Data to CSV Files",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -100,7 +110,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DelimitedTextCSV",
+									"referenceName": "DS_DelimitedTextCSV",
 									"type": "DatasetReference",
 									"parameters": {
 										"DirectoryName": "DailyFetch/CustomerLoan",
@@ -116,6 +126,22 @@
 				}
 			}
 		],
+		"parameters": {
+			"TableName": {
+				"type": "string",
+				"defaultValue": "TABLES"
+			},
+			"SchemaName": {
+				"type": "string",
+				"defaultValue": "INFORMATION_SCHEMA"
+			},
+			"NoTableName": {
+				"type": "string"
+			},
+			"InfoSchemaName": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
