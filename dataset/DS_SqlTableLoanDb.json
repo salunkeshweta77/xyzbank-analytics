@@ -1,5 +1,5 @@
 {
-	"name": "SqlTableCustomerLoan",
+	"name": "DS_SqlTableLoanDb",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_LoanDatabase",
