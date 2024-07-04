@@ -2,7 +2,7 @@
 	"name": "DS_DelimitedTextCSVArchive",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureDataLakeStorage1",
+			"referenceName": "LS_ADLS_XYZBank",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
