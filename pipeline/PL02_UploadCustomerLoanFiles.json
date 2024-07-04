@@ -136,10 +136,12 @@
 				"defaultValue": "INFORMATION_SCHEMA"
 			},
 			"NoTableName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "CustomerLoanInfo"
 			},
 			"InfoSchemaName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "dbo"
 			}
 		},
 		"annotations": []
